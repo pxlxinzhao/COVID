@@ -8,22 +8,25 @@ import { Flip } from 'number-flip';
 })
 export class Tab1Page {
   $: any;
+  duration = 2;
 
   constructor() {
     this.$ = (_) => document.querySelector(_);
   }
 
   ionViewWillEnter() {
-    this.showConfirmed();
+    this.showNumber(4786, '.confirmed');
+    this.showNumber(1, '.deaths');
+    this.showNumber(123, '.recovered');
   }
 
-  showConfirmed() {
-    const count = 4789;
+  showNumber(count, selector) {
     const flip = new Flip({
-      node: this.$('.confirmed'),
+      node: this.$(selector),
       from: this.topUpNumber(count),
-      duration: 2
+      duration: this.duration
     });
+
     flip.flipTo({
       to: count,
       direct: false
