@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Flip } from 'number-flip';
+import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-tab1',
@@ -10,11 +11,12 @@ export class Tab1Page {
   $: any;
   duration = 2;
 
-  constructor() {
+  constructor(private dataService: DataService) {
     this.$ = (_) => document.querySelector(_);
   }
 
   ionViewWillEnter() {
+    this.dataService.log();
     this.showNumber(4786, '.confirmed');
     this.showNumber(1, '.deaths');
     this.showNumber(123, '.recovered');
