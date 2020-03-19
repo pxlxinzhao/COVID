@@ -17,26 +17,30 @@ ion-row {
 .fullWidthRow {
   width: 100vw;
   text-align: center;
+  color: #666;
 }
 
 .category {
   @extend .fullWidthRow;
-  font-size: 4vw;
+  font-size: 4vmin;
 }
 
 .confirmed {
   @extend .fullWidthRow;
-  font-size: 20vw;
+  font-size: 16vmin;
+  color: #F7DD72;
 }
 
 .deaths {
   @extend .fullWidthRow;
-  font-size: 20vw;
+  font-size: 16vmin;
+  color: #D2AB99;
 }
 
 .recovered {
   @extend .fullWidthRow;
-  font-size: 20vw;
+  font-size: 16vmin;
+  color: #8DB38B;
 }
 
 .flip {
