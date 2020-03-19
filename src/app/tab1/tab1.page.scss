@@ -2,6 +2,10 @@ ion-content ion-toolbar {
   --background: translucent;
 }
 
+ion-row {
+  margin: 24px 0;
+}
+
 .container {
   margin: 0;
   position: absolute;
@@ -10,6 +14,31 @@ ion-content ion-toolbar {
   transform: translateY(-50%);
 }
 
+.fullWidthRow {
+  width: 100vw;
+  text-align: center;
+}
+
+.category {
+  @extend .fullWidthRow;
+  font-size: 4vw;
+}
+
+.confirmed {
+  @extend .fullWidthRow;
+  font-size: 20vw;
+}
+
+.deaths {
+  @extend .fullWidthRow;
+  font-size: 20vw;
+}
+
+.recovered {
+  @extend .fullWidthRow;
+  font-size: 20vw;
+}
+
 .flip {
-  // font-size: 20vw;
+  font-size: 8vw;
 }
