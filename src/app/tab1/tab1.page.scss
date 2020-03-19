@@ -4,6 +4,7 @@ ion-content ion-toolbar {
 
 ion-row {
   margin: 24px 0;
+  color: black;
 }
 
 .container {
@@ -12,6 +13,10 @@ ion-row {
   top: 50%;
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
+}
+
+.select {
+
 }
 
 .fullWidthRow {

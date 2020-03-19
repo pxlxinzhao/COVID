@@ -10,6 +10,8 @@ import { DataService } from '../service/data.service';
 export class Tab1Page {
   $: any;
   duration = 2;
+  countries = [];
+  selectCountry = 'World';
 
   constructor(private dataService: DataService) {
     this.$ = (_) => document.querySelector(_);
@@ -18,10 +20,13 @@ export class Tab1Page {
   ionViewWillEnter() {
     this.dataService.get('Canada', (covid19Stats) => {
         console.log(covid19Stats);
+
+        const countrySet = new Set();
         const result = covid19Stats.reduce(( a, b ) => {
           a.confirmed += b.confirmed;
           a.deaths += b.deaths;
           a.recovered += b.recovered;
+          countrySet.add(b.country);
           return a;
         }, {
           confirmed: 0,
@@ -32,7 +37,16 @@ export class Tab1Page {
         this.showNumber(result.confirmed, '.confirmed');
         this.showNumber(result.deaths, '.deaths');
         this.showNumber(result.recovered, '.recovered');
+
+        console.log('countrySet', countrySet);
+        countrySet.forEach((c) => {
+          this.countries.push(c);
+        });
     });
+  }
+
+  refresh() {
+    console.log('selectCountry, selectCountry');
   }
 
   showNumber(count, selector) {
