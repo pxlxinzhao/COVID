@@ -1,3 +1,15 @@
 ion-content ion-toolbar {
   --background: translucent;
 }
+
+.container {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.flip {
+  // font-size: 20vw;
+}
