@@ -16,10 +16,23 @@ export class Tab1Page {
   }
 
   ionViewWillEnter() {
-    this.dataService.log();
-    this.showNumber(4786, '.confirmed');
-    this.showNumber(1, '.deaths');
-    this.showNumber(123, '.recovered');
+    this.dataService.get('Canada', (covid19Stats) => {
+        console.log(covid19Stats);
+        const result = covid19Stats.reduce(( a, b ) => {
+          a.confirmed += b.confirmed;
+          a.deaths += b.deaths;
+          a.recovered += b.recovered;
+          return a;
+        }, {
+          confirmed: 0,
+          deaths: 0,
+          recovered: 0
+        });
+
+        this.showNumber(result.confirmed, '.confirmed');
+        this.showNumber(result.deaths, '.deaths');
+        this.showNumber(result.recovered, '.recovered');
+    });
   }
 
   showNumber(count, selector) {
