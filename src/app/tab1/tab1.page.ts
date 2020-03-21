@@ -47,6 +47,7 @@ export class Tab1Page {
       countrySet.forEach((c) => {
         this.countries.push(c);
       });
+      this.countries.sort();
       console.log('countries', this.countries);
   });
   }
