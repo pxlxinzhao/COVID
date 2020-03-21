@@ -28,26 +28,36 @@ export class Tab1Page {
     });
     await this.loader.present();
 
-    this.refresh( () => {
+    this.fetchData( () => {
+      console.log('polulating country');
       this.populateCountries();
       this.storage.get('country').then((val) => {
+        console.log('getting stored country');
         if (val) {
           this.selectedCountry = val;
         }
-        this.refresh(this.updateLabels.bind(this));
+        console.log('calling updateLabels in willEnter');
+
+        this.loader.dismiss();
+        this.isLoading = false;
+
+        setTimeout(() => {
+          this.updateLabels();
+        }, 0);
       });
     });
   }
 
-  onCountryChange() {
-    console.log('setting country', this.selectedCountry);
+  async onCountryChange() {
+    console.log('onCountryChange', this.selectedCountry);
     this.storage.set('country', this.selectedCountry);
-    this.refresh(this.updateLabels.bind(this));
+    this.updateLabels();
   }
 
-  refresh(callback?) {
+  fetchData(callback?) {
+    console.log('start fetching');
     this.dataService.get(this.selectedCountry, (covid19Stats) => {
-      console.log(covid19Stats);
+      console.log('getting data from server: ', covid19Stats.length);
       this.cachedCovid19Stats = covid19Stats;
 
       if (callback) {
@@ -57,7 +67,16 @@ export class Tab1Page {
   }
 
   updateLabels() {
-    const result = this.cachedCovid19Stats.reduce(( a, b ) => {
+    console.log('updateLabels and current coutry is: ', this.selectedCountry);
+    const result = this.cachedCovid19Stats.
+    filter((a) => {
+      if (this.selectedCountry === 'World') {
+        return true;
+      } else {
+        return a.country === this.selectedCountry;
+      }
+    })
+    .reduce(( a, b ) => {
       a.confirmed += b.confirmed;
       a.deaths += b.deaths;
       a.recovered += b.recovered;
@@ -68,11 +87,10 @@ export class Tab1Page {
       recovered: 0
     });
 
+    console.log('updateLabels with result: ', result);
     this.showNumber(result.confirmed, '.confirmed');
     this.showNumber(result.deaths, '.deaths');
     this.showNumber(result.recovered, '.recovered');
-    this.loader.dismiss();
-    this.isLoading = false;
   }
 
   populateCountries() {
