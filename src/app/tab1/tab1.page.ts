@@ -25,8 +25,8 @@ export class Tab1Page {
       this.storage.get('country').then((val) => {
         if (val) {
           this.selectedCountry = val;
-          this.refresh(this.updateLabels.bind(this));
         }
+        this.refresh(this.updateLabels.bind(this));
       });
     });
   }
