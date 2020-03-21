@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { Flip } from 'number-flip';
 import { DataService } from '../service/data.service';
 
@@ -11,45 +12,70 @@ export class Tab1Page {
   $: any;
   duration = 1.2;
   countries = [];
-  selectCountry = 'World';
+  selectedCountry = 'World';
+  cachedCovid19Stats: any;
 
-  constructor(private dataService: DataService) {
+  constructor(private storage: Storage, private dataService: DataService) {
     this.$ = (_) => document.querySelector(_);
   }
 
   ionViewWillEnter() {
-    this.refresh();
+    this.refresh( () => {
+      this.populateCountries();
+      this.storage.get('country').then((val) => {
+        if (val) {
+          this.selectedCountry = val;
+          this.refresh(this.updateLabels.bind(this));
+        }
+      });
+    });
   }
 
-  refresh() {
-    console.log('selectCountry', this.selectCountry);
-    this.dataService.get(this.selectCountry, (covid19Stats) => {
+  onCountryChange() {
+    console.log('setting country', this.selectedCountry);
+    this.storage.set('country', this.selectedCountry);
+    this.refresh(this.updateLabels.bind(this));
+  }
+
+  refresh(callback?) {
+    this.dataService.get(this.selectedCountry, (covid19Stats) => {
       console.log(covid19Stats);
+      this.cachedCovid19Stats = covid19Stats;
 
-      const countrySet = new Set();
-      const result = covid19Stats.reduce(( a, b ) => {
-        a.confirmed += b.confirmed;
-        a.deaths += b.deaths;
-        a.recovered += b.recovered;
-        countrySet.add(b.country);
-        return a;
-      }, {
-        confirmed: 0,
-        deaths: 0,
-        recovered: 0
-      });
-
-      this.showNumber(result.confirmed, '.confirmed');
-      this.showNumber(result.deaths, '.deaths');
-      this.showNumber(result.recovered, '.recovered');
-
-      console.log('countrySet', countrySet);
-      countrySet.forEach((c) => {
-        this.countries.push(c);
-      });
-      this.countries.sort();
-      console.log('countries', this.countries);
+      if (callback) {
+        callback();
+      }
   });
+  }
+
+  updateLabels() {
+    const result = this.cachedCovid19Stats.reduce(( a, b ) => {
+      a.confirmed += b.confirmed;
+      a.deaths += b.deaths;
+      a.recovered += b.recovered;
+      return a;
+    }, {
+      confirmed: 0,
+      deaths: 0,
+      recovered: 0
+    });
+
+    this.showNumber(result.confirmed, '.confirmed');
+    this.showNumber(result.deaths, '.deaths');
+    this.showNumber(result.recovered, '.recovered');
+  }
+
+  populateCountries() {
+    this.countries = [];
+    const countrySet = new Set();
+    this.cachedCovid19Stats.forEach(( a ) => {
+      countrySet.add(a.country);
+      return a;
+    });
+    countrySet.forEach((c) => {
+      this.countries.push(c);
+    });
+    this.countries.sort();
   }
 
   showNumber(count, selector) {

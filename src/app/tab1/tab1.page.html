@@ -10,7 +10,7 @@
 
   <ion-item>
     <ion-label>Select country:</ion-label>
-    <ion-select okText="Okay" cancelText="Dismiss" class="select" [(ngModel)]="selectCountry" (ionChange)="refresh($event)">
+    <ion-select okText="Okay" cancelText="Dismiss" class="select" [(ngModel)]="selectedCountry" (ionChange)="onCountryChange($event)">
       <ion-select-option value="World">World</ion-select-option>
       <ion-select-option *ngFor="let c of countries" value="{{c}}">{{c}}</ion-select-option>
     </ion-select>
