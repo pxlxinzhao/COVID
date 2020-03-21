@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Flip } from 'number-flip';
+import { LoadingController } from '@ionic/angular';
 import { DataService } from '../service/data.service';
 
 @Component({
@@ -14,12 +15,19 @@ export class Tab1Page {
   countries = [];
   selectedCountry = 'World';
   cachedCovid19Stats: any;
+  isLoading = true;
+  loader: any;
 
-  constructor(private storage: Storage, private dataService: DataService) {
+  constructor(private storage: Storage, private loadingController: LoadingController, private dataService: DataService) {
     this.$ = (_) => document.querySelector(_);
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
+    this.loader = await this.loadingController.create({
+      message: 'Retrieving data...',
+    });
+    await this.loader.present();
+
     this.refresh( () => {
       this.populateCountries();
       this.storage.get('country').then((val) => {
@@ -63,6 +71,8 @@ export class Tab1Page {
     this.showNumber(result.confirmed, '.confirmed');
     this.showNumber(result.deaths, '.deaths');
     this.showNumber(result.recovered, '.recovered');
+    this.loader.dismiss();
+    this.isLoading = false;
   }
 
   populateCountries() {

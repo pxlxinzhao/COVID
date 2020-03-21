@@ -8,7 +8,7 @@
 
 <ion-content [fullscreen]="true">
 
-  <ion-item>
+  <ion-item [hidden]="isLoading">
     <ion-label>Select country:</ion-label>
     <ion-select okText="Okay" cancelText="Dismiss" class="select" [(ngModel)]="selectedCountry" (ionChange)="onCountryChange($event)">
       <ion-select-option value="World">World</ion-select-option>
@@ -16,7 +16,7 @@
     </ion-select>
   </ion-item>
 
-  <div class="container">
+  <div class="container" [hidden]="isLoading">
     <ion-grid>
 
       <ion-row>
