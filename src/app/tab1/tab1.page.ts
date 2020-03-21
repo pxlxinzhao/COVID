@@ -9,7 +9,7 @@ import { DataService } from '../service/data.service';
 })
 export class Tab1Page {
   $: any;
-  duration = 2;
+  duration = 1.2;
   countries = [];
   selectCountry = 'World';
 
@@ -18,38 +18,41 @@ export class Tab1Page {
   }
 
   ionViewWillEnter() {
-    this.dataService.get('Canada', (covid19Stats) => {
-        console.log(covid19Stats);
-
-        const countrySet = new Set();
-        const result = covid19Stats.reduce(( a, b ) => {
-          a.confirmed += b.confirmed;
-          a.deaths += b.deaths;
-          a.recovered += b.recovered;
-          countrySet.add(b.country);
-          return a;
-        }, {
-          confirmed: 0,
-          deaths: 0,
-          recovered: 0
-        });
-
-        this.showNumber(result.confirmed, '.confirmed');
-        this.showNumber(result.deaths, '.deaths');
-        this.showNumber(result.recovered, '.recovered');
-
-        console.log('countrySet', countrySet);
-        countrySet.forEach((c) => {
-          this.countries.push(c);
-        });
-    });
+    this.refresh();
   }
 
   refresh() {
-    console.log('selectCountry, selectCountry');
+    console.log('selectCountry', this.selectCountry);
+    this.dataService.get(this.selectCountry, (covid19Stats) => {
+      console.log(covid19Stats);
+
+      const countrySet = new Set();
+      const result = covid19Stats.reduce(( a, b ) => {
+        a.confirmed += b.confirmed;
+        a.deaths += b.deaths;
+        a.recovered += b.recovered;
+        countrySet.add(b.country);
+        return a;
+      }, {
+        confirmed: 0,
+        deaths: 0,
+        recovered: 0
+      });
+
+      this.showNumber(result.confirmed, '.confirmed');
+      this.showNumber(result.deaths, '.deaths');
+      this.showNumber(result.recovered, '.recovered');
+
+      console.log('countrySet', countrySet);
+      countrySet.forEach((c) => {
+        this.countries.push(c);
+      });
+      console.log('countries', this.countries);
+  });
   }
 
   showNumber(count, selector) {
+    this.$(selector).textContent = '';
     const flip = new Flip({
       node: this.$(selector),
       from: this.topUpNumber(count),
