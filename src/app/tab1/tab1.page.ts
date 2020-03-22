@@ -27,24 +27,25 @@ export class Tab1Page {
       message: 'Retrieving data...',
     });
     await this.loader.present();
+    await this.fetchData(this.selectedCountry);
+    this.populateCountries();
+    this.getDefaultCountryAndUpdateLabel();
+  }
 
-    this.fetchData( () => {
-      console.log('polulating country');
-      this.populateCountries();
-      this.storage.get('country').then((val) => {
-        console.log('getting stored country');
-        if (val) {
-          this.selectedCountry = val;
-        }
-        console.log('calling updateLabels in willEnter');
+  getDefaultCountryAndUpdateLabel() {
+    this.storage.get('country').then((val) => {
+      console.log('getting stored country');
+      if (val) {
+        this.selectedCountry = val;
+      }
+      console.log('calling updateLabels in willEnter');
 
-        this.loader.dismiss();
-        this.isLoading = false;
+      this.loader.dismiss();
+      this.isLoading = false;
 
-        setTimeout(() => {
-          this.updateLabels();
-        }, 0);
-      });
+      setTimeout(() => {
+        this.updateLabels();
+      }, 0);
     });
   }
 
@@ -54,16 +55,9 @@ export class Tab1Page {
     this.updateLabels();
   }
 
-  fetchData(callback?) {
-    console.log('start fetching');
-    this.dataService.get(this.selectedCountry, (covid19Stats) => {
-      console.log('getting data from server: ', covid19Stats.length);
-      this.cachedCovid19Stats = covid19Stats;
-
-      if (callback) {
-        callback();
-      }
-  });
+  async fetchData(selectedCountry?) {
+    const res = await this.dataService.get(selectedCountry);
+    this.cachedCovid19Stats = res.data;
   }
 
   updateLabels() {
@@ -77,23 +71,24 @@ export class Tab1Page {
       }
     })
     .reduce(( a, b ) => {
-      a.confirmed += b.confirmed;
+      a.cases += b.cases;
       a.deaths += b.deaths;
       a.recovered += b.recovered;
       return a;
     }, {
-      confirmed: 0,
+      cases: 0,
       deaths: 0,
       recovered: 0
     });
 
     console.log('updateLabels with result: ', result);
-    this.showNumber(result.confirmed, '.confirmed');
+    this.showNumber(result.cases, '.confirmed');
     this.showNumber(result.deaths, '.deaths');
     this.showNumber(result.recovered, '.recovered');
   }
 
   populateCountries() {
+    console.log('polulating country');
     this.countries = [];
     const countrySet = new Set();
     this.cachedCovid19Stats.forEach(( a ) => {
