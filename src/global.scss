@@ -25,14 +25,9 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-ion-title, ion-label, .select, label, button, h2 {
-    font-family: 'Poiret One', sans-serif;
-}
-
-.sc-ion-label-ios-h.sc-ion-label-ios-s.ios.hydrated {
-    font-family: 'Poiret One', sans-serif;
-}
-
-#ion-sel-0-lbl {
+ion-title, ion-label, .select, label, button, h2,
+.item.sc-ion-label-ios-h, .item .sc-ion-label-ios-h,
+.item.sc-ion-label-md-h, .item .sc-ion-label-md-h, 
+#ion-sel-0-lbl, .loading-content{
     font-family: 'Poiret One', sans-serif;
 }
