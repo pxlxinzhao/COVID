@@ -1,3 +1,7 @@
+$yellow: #F7DD72;
+$red: #D2AB99;
+$green: #8DB38B;
+
 ion-content ion-toolbar {
   --background: translucent;
 }
@@ -8,14 +12,10 @@ ion-row {
 }
 
 .container {
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+  padding: 24px;
 }
 
 .fullWidthRow {
-  width: 100vw;
   text-align: center;
   color: #666;
 }
@@ -25,22 +25,32 @@ ion-row {
   font-size: 4vmin;
 }
 
-.confirmed {
+.cases {
   @extend .fullWidthRow;
   font-size: 16vmin;
-  color: #F7DD72;
+  color: $yellow;
+}
+
+.todayCases {
+  @extend .cases;
+  color: darken( $yellow, 20% );
 }
 
 .deaths {
   @extend .fullWidthRow;
   font-size: 16vmin;
-  color: #D2AB99;
+  color: $red;
+}
+
+.todayDeaths {
+  @extend .deaths;
+  color: darken( $red, 20% );
 }
 
 .recovered {
   @extend .fullWidthRow;
   font-size: 16vmin;
-  color: #8DB38B;
+  color: $green;
 }
 
 .flip {

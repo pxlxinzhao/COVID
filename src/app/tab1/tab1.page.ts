@@ -72,18 +72,24 @@ export class Tab1Page {
     })
     .reduce(( a, b ) => {
       a.cases += b.cases;
+      a.todayCases += b.todayCases;
       a.deaths += b.deaths;
+      a.todayDeaths += b.todayDeaths;
       a.recovered += b.recovered;
       return a;
     }, {
       cases: 0,
+      todayCases: 0,
       deaths: 0,
+      todayDeaths: 0,
       recovered: 0
     });
 
     console.log('updateLabels with result: ', result);
-    this.showNumber(result.cases, '.confirmed');
+    this.showNumber(result.cases, '.cases');
+    this.showNumber(result.todayCases, '.todayCases');
     this.showNumber(result.deaths, '.deaths');
+    this.showNumber(result.todayDeaths, '.todayDeaths');
     this.showNumber(result.recovered, '.recovered');
   }
 
