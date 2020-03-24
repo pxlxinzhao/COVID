@@ -25,8 +25,10 @@ export class Tab2Page {
         message: 'Loading news...',
       });
       await this.loader.present();
-      const {data} = await this.newsService.get();
-      this.articles = data.articles;
+      console.log('getting news');
+      const res = await this.newsService.get();
+      console.log('res', res);
+      this.articles = res.data.articles;
       console.log(this.articles);
       this.loader.dismiss();
       this.loading = false;
@@ -34,6 +36,14 @@ export class Tab2Page {
   }
 
   open(link: string) {
-    this.iab.create(link);
+    this.iab.create(this.convertHttps(link));
+  }
+
+  getImageUrl(article: any) {
+    return this.convertHttps(article.urlToImage);
+  }
+
+  convertHttps(str: string) {
+    return str.replace('http://', 'https://');
   }
 }
