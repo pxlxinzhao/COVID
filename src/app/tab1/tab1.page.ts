@@ -18,7 +18,9 @@ export class Tab1Page {
   isLoading = true;
   loader: any;
 
-  constructor(private storage: Storage, private loadingController: LoadingController, private dataService: DataService) {
+  constructor(private storage: Storage,
+              private loadingController: LoadingController,
+              private dataService: DataService) {
     this.$ = (_) => document.querySelector(_);
   }
 
