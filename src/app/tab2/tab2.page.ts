@@ -19,22 +19,21 @@ export class Tab2Page {
               ) {}
 
   async ionViewWillEnter() {
-    this.loading = true;
-    this.loader = await this.loadingController.create({
-      message: 'Loading news...',
-    });
-    await this.loader.present();
-    const {data} = await this.newsService.get();
-    this.articles = data.articles;
-    console.log(this.articles);
-    this.loader.dismiss();
-    this.loading = false;
+    if (!this.articles) {
+      this.loading = true;
+      this.loader = await this.loadingController.create({
+        message: 'Loading news...',
+      });
+      await this.loader.present();
+      const {data} = await this.newsService.get();
+      this.articles = data.articles;
+      console.log(this.articles);
+      this.loader.dismiss();
+      this.loading = false;
+    }
   }
 
   open(link: string) {
-    const browser = this.iab.create(link);
-    browser.on('loadstop').subscribe(event => {
-    });
-    // browser.close();
+    this.iab.create(link);
   }
 }

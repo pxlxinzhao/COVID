@@ -25,13 +25,15 @@ export class Tab1Page {
   }
 
   async ionViewWillEnter() {
-    this.loader = await this.loadingController.create({
-      message: 'Retrieving data...',
-    });
-    await this.loader.present();
-    await this.fetchData(this.selectedCountry);
-    this.populateCountries();
-    this.getDefaultCountryAndUpdateLabel();
+    if (!this.cachedCovid19Stats) {
+      this.loader = await this.loadingController.create({
+        message: 'Retrieving data...',
+      });
+      await this.loader.present();
+      await this.fetchData(this.selectedCountry);
+      this.populateCountries();
+      this.getDefaultCountryAndUpdateLabel();
+    }
   }
 
   getDefaultCountryAndUpdateLabel() {
