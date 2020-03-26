@@ -1,7 +1,8 @@
-import { Component, HostListener, ElementRef } from '@angular/core';
+import { Component, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { NewsService } from '../service/news.service';
 import { LoadingController, AngularDelegate } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { IonInfiniteScroll } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -11,7 +12,10 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 export class Tab2Page {
   loading = false;
   loader: any;
-  articles: [any];
+  articles: Array<any>;
+  page = 1;
+
+  @ViewChild(IonInfiniteScroll, null) infiniteScroll: IonInfiniteScroll;
 
   constructor(private newsService: NewsService,
               private loadingController: LoadingController,
@@ -26,8 +30,8 @@ export class Tab2Page {
         message: 'Loading news...',
       });
       await this.loader.present();
-      console.log('getting news');
-      const res = await this.newsService.get();
+      console.log(`loading page ${this.page}`);
+      const res = await this.newsService.get(this.page++);
       console.log('res', res);
       this.articles = res.data.articles;
       console.log(this.articles);
@@ -50,5 +54,12 @@ export class Tab2Page {
     } else {
       return str;
     }
+  }
+
+  async loadData(event) {
+      console.log(`loading page ${this.page}`);
+      const res = await this.newsService.get(this.page++);
+      this.articles = this.articles.concat(res.data.articles);
+      event.target.complete();
   }
 }
