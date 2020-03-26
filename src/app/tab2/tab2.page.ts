@@ -44,6 +44,10 @@ export class Tab2Page {
   }
 
   convertHttps(str: string) {
-    return str.replace('http://', 'https://');
+    if (str) {
+      return str.replace('http://', 'https://');
+    } else {
+      return str;
+    }
   }
 }
