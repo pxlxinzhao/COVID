@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, ElementRef } from '@angular/core';
 import { NewsService } from '../service/news.service';
 import { LoadingController, AngularDelegate } from '@ionic/angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
@@ -15,7 +15,8 @@ export class Tab2Page {
 
   constructor(private newsService: NewsService,
               private loadingController: LoadingController,
-              private iab: InAppBrowser
+              private iab: InAppBrowser,
+              private eRef: ElementRef
               ) {}
 
   async ionViewWillEnter() {

@@ -6,3 +6,8 @@ ion-content ion-toolbar {
   text-align: center;
   padding: 8px;
 }
+
+.newsImage {
+  width: 100%;
+  object-fit: cover;
+}
