@@ -3,6 +3,9 @@
     <ion-title>
       COVID-19 News
     </ion-title>
+    <div class="link-container" *ngIf="!loading">
+      <a href="https://newsapi.org">Powered by NewsApi.org</a>
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -17,9 +20,5 @@
       {{article.title}}
     </ion-card-content>
   </ion-card>
-
-  <div class="link-container" *ngIf="!loading">
-    <a href="https://newsapi.org">Powered by NewsApi.org</a>
-  </div>
 
 </ion-content>
