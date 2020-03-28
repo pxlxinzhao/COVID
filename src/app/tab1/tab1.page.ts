@@ -116,7 +116,8 @@ export class Tab1Page {
     const flip = new Flip({
       node: this.$(selector),
       from: this.topUpNumber(count),
-      duration: this.duration
+      duration: this.duration,
+      separator: ','
     });
 
     flip.flipTo({
