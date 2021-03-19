@@ -1,6 +1,6 @@
-$yellow: #F7DD72;
-$red: #D2AB99;
-$green: #8DB38B;
+$yellow: #f7dd72;
+$red: #d2ab99;
+$green: #8db38b;
 
 ion-content ion-toolbar {
   --background: translucent;
@@ -22,41 +22,41 @@ ion-row {
 }
 
 .fullWidthRow {
-  font-family: 'Advent Pro', sans-serif;
+  font-family: "Advent Pro", sans-serif;
   text-align: center;
   color: #666;
 }
 
 .category {
   @extend .fullWidthRow;
-  font-size: 4vmin;
+  font-size: 1rem;
 }
 
 .cases {
   @extend .fullWidthRow;
-  font-size: 16vmin;
+  font-size: 2rem;
   color: $yellow;
 }
 
 .todayCases {
   @extend .cases;
-  color: darken( $yellow, 20% );
+  color: darken($yellow, 20%);
 }
 
 .deaths {
   @extend .fullWidthRow;
-  font-size: 16vmin;
+  font-size: 2rem;
   color: $red;
 }
 
 .todayDeaths {
   @extend .deaths;
-  color: darken( $red, 20% );
+  color: darken($red, 20%);
 }
 
 .recovered {
   @extend .fullWidthRow;
-  font-size: 16vmin;
+  font-size: 2rem;
   color: $green;
 }
 
