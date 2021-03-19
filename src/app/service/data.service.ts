@@ -10,9 +10,9 @@ export class DataService {
 
     async get(country?) {
         if (country && country !== 'World') {
-            return await axios.get(`https://corona.lmao.ninja/countries/${country}`);
+            return await axios.get(`https://corona.lmao.ninja/v2/countries/${country}`);
         } else {
-            return await axios.get('https://corona.lmao.ninja/countries');
+            return await axios.get('https://corona.lmao.ninja/v2/countries');
         }
     }
 }
