@@ -13,6 +13,7 @@ export class NewsPage {
   loader: any;
   articles: Array<any>;
   page = 1;
+  networkError = false;
 
   @ViewChild(IonInfiniteScroll, null) infiniteScroll: IonInfiniteScroll;
 
@@ -30,10 +31,14 @@ export class NewsPage {
       });
       await this.loader.present();
       console.log(`loading page ${this.page}`);
-      const res = await this.newsService.get(this.page++);
-      console.log('res', res);
-      this.articles = res.data.articles;
-      console.log(this.articles);
+      const res = await this.getNews();
+
+      if (res) {
+        console.log('res', res);
+        this.articles = res.data.articles;
+        console.log(this.articles);
+      }
+
       this.loader.dismiss();
       this.loading = false;
     }
@@ -57,8 +62,22 @@ export class NewsPage {
 
   async loadData(event) {
       console.log(`loading page ${this.page}`);
-      const res = await this.newsService.get(this.page++);
-      this.articles = this.articles.concat(res.data.articles);
+      const res = await this.getNews();
+
+      if (res) {
+        this.articles = this.articles.concat(res.data.articles);
+      }
+
       event.target.complete();
+  }
+
+  private async getNews() {
+    this.networkError = false;
+    try {
+      return await this.newsService.get(this.page++);
+    } catch (e) {
+      console.error(e);
+      this.networkError = true;
+    }
   }
 }

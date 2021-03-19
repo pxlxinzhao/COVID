@@ -12,6 +12,12 @@
 <ion-content [fullscreen]="true">
 
   <ion-content>
+    <div class="error-text">
+      <ion-text color="danger" *ngIf="networkError">
+        Unable to load news. Please try again later.
+      </ion-text>
+    </div>
+
     <ion-list>
       <ion-card *ngFor="let article of articles" (click)="open(article.url)" [hidden]="!getImageUrl(article)">
         <img class="newsImage" src="{{getImageUrl(article)}}" appAltImage="./assets/alt1.jpg" alt="image"/>
