@@ -12,8 +12,8 @@
 <ion-content [fullscreen]="true">
 
   <ion-content>
-    <div class="error-text">
-      <ion-text color="danger" *ngIf="networkError">
+    <div class="error-text" *ngIf="networkError">
+      <ion-text color="danger">
         Unable to load news. Please try again later.
       </ion-text>
     </div>

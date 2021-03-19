@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage';
 import { Flip } from 'number-flip';
 import { LoadingController } from '@ionic/angular';
 import { DataService } from '../service/data.service';
+import { StorageService } from '../service/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +18,7 @@ export class HomePage {
   isLoading = true;
   loader: any;
 
-  constructor(private storage: Storage,
+  constructor(private storage: StorageService,
               private loadingController: LoadingController,
               private dataService: DataService) {
     this.$ = (_) => document.querySelector(_);
