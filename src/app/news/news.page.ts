@@ -1,15 +1,14 @@
-import { Component, HostListener, ElementRef, ViewChild } from '@angular/core';
-import { NewsService } from '../service/news.service';
-import { LoadingController, AngularDelegate } from '@ionic/angular';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, LoadingController } from '@ionic/angular';
+import { NewsService } from '../service/news.service';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  selector: 'app-news',
+  templateUrl: 'news.page.html',
+  styleUrls: ['news.page.scss']
 })
-export class Tab2Page {
+export class NewsPage {
   loading = false;
   loader: any;
   articles: Array<any>;
